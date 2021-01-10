@@ -2,6 +2,7 @@ package com.xxl.sso.sample.config;
 
 import com.xxl.sso.core.conf.Conf;
 import com.xxl.sso.core.filter.XxlSsoWebFilter;
+import com.xxl.sso.core.store.SsoLoginStore;
 import com.xxl.sso.core.util.JedisUtil;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,9 +29,13 @@ public class XxlSsoConfig implements DisposableBean {
     @Value("${xxl.sso.redis.address}")
     private String xxlSsoRedisAddress;
 
+    @Value("${xxl.sso.redis.expire.minute}")
+    private int redisExpireMinute;
+
 
     @Bean
     public FilterRegistrationBean xxlSsoFilterRegistration() {
+        SsoLoginStore.setRedisExpireMinute(redisExpireMinute);
 
         // xxl-sso, redis init
         JedisUtil.init(xxlSsoRedisAddress);

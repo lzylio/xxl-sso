@@ -11,7 +11,8 @@ import com.xxl.sso.core.util.JedisUtil;
  */
 public class SsoLoginStore {
 
-    private static int redisExpireMinute = 1440;    // 1440 minute, 24 hour
+//    private static int redisExpireMinute = 1440;    // 1440 minute, 24 hour
+    private static int redisExpireMinute = 30;    // 30min 设了默认值配置那边就有可能不生效了
     public static void setRedisExpireMinute(int redisExpireMinute) {
         // 少于30分钟按30分钟处理 测试的时候可以关闭
 //        if (redisExpireMinute < 30) {

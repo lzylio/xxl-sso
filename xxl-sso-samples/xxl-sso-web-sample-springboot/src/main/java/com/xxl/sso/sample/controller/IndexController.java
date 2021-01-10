@@ -31,4 +31,23 @@ public class IndexController {
         return new ReturnT(xxlUser);
     }
 
+    /*---白名单测试---*/
+    @RequestMapping("/white/1")
+    @ResponseBody
+    public String white1() {
+        return "white1";
+    }
+
+    @RequestMapping("/white/2")
+    @ResponseBody
+    public String white2() {
+        return "white2";
+    }
+
+    @RequestMapping("/white/list")
+    @ResponseBody
+    public String whites() {
+        return "whites";
+    }
+
 }
