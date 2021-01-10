@@ -13,9 +13,10 @@ public class SsoLoginStore {
 
     private static int redisExpireMinute = 1440;    // 1440 minute, 24 hour
     public static void setRedisExpireMinute(int redisExpireMinute) {
-        if (redisExpireMinute < 30) {
-            redisExpireMinute = 30;
-        }
+        // 少于30分钟按30分钟处理 测试的时候可以关闭
+//        if (redisExpireMinute < 30) {
+//            redisExpireMinute = 30;
+//        }
         SsoLoginStore.redisExpireMinute = redisExpireMinute;
     }
     public static int getRedisExpireMinute() {
