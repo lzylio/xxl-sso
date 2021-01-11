@@ -5,6 +5,7 @@ import com.xxl.sso.core.login.SsoWebLoginHelper;
 import com.xxl.sso.core.store.SsoLoginStore;
 import com.xxl.sso.core.user.XxlSsoUser;
 import com.xxl.sso.core.store.SsoSessionIdHelper;
+import com.xxl.sso.server.core.model.User;
 import com.xxl.sso.server.core.model.UserInfo;
 import com.xxl.sso.server.core.result.ReturnT;
 import com.xxl.sso.server.service.UserService;
@@ -96,7 +97,7 @@ public class WebController {
         boolean ifRem = (ifRemember!=null&&"on".equals(ifRemember))?true:false;
 
         // valid login
-        ReturnT<UserInfo> result = userService.findUser(username, password);
+        ReturnT<User> result = userService.findUser(username, password);
         if (result.getCode() != ReturnT.SUCCESS_CODE) {
             redirectAttributes.addAttribute("errorMsg", result.getMsg());
 
@@ -106,8 +107,8 @@ public class WebController {
 
         // 1、make xxl-sso user
         XxlSsoUser xxlUser = new XxlSsoUser();
-        xxlUser.setUserid(String.valueOf(result.getData().getUserid()));
-        xxlUser.setUsername(result.getData().getUsername());
+        xxlUser.setUserid(String.valueOf(result.getData().getId()));
+        xxlUser.setUsername(result.getData().getUserName());
         xxlUser.setVersion(UUID.randomUUID().toString().replaceAll("-", ""));
         xxlUser.setExpireMinute(SsoLoginStore.getRedisExpireMinute());
         xxlUser.setExpireFreshTime(System.currentTimeMillis());

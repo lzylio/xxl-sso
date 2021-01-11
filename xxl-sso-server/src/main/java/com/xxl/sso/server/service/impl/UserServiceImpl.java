@@ -1,45 +1,34 @@
 package com.xxl.sso.server.service.impl;
 
-import com.xxl.sso.server.core.model.UserInfo;
+import com.xxl.sso.server.core.model.User;
 import com.xxl.sso.server.core.result.ReturnT;
+import com.xxl.sso.server.dao.UserDao;
 import com.xxl.sso.server.service.UserService;
+import com.xxl.sso.server.util.Md5Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private static List<UserInfo> mockUserList = new ArrayList<>();
-    static {
-        for (int i = 0; i <5; i++) {
-            UserInfo userInfo = new UserInfo();
-            userInfo.setUserid(1000+i);
-            userInfo.setUsername("user" + (i>0?String.valueOf(i):""));
-            userInfo.setPassword("123456");
-            mockUserList.add(userInfo);
-        }
-    }
+    @Autowired
+    UserDao userDao;
 
     @Override
-    public ReturnT<UserInfo> findUser(String username, String password) {
+    public ReturnT<User> findUser(String username, String password) {
 
         if (username==null || username.trim().length()==0) {
-            return new ReturnT<UserInfo>(ReturnT.FAIL_CODE, "Please input username.");
+            return new ReturnT<User>(ReturnT.FAIL_CODE, "Please input username.");
         }
         if (password==null || password.trim().length()==0) {
-            return new ReturnT<UserInfo>(ReturnT.FAIL_CODE, "Please input password.");
+            return new ReturnT<User>(ReturnT.FAIL_CODE, "Please input password.");
         }
 
-        // mock user
-        for (UserInfo mockUser: mockUserList) {
-            if (mockUser.getUsername().equals(username) && mockUser.getPassword().equals(password)) {
-                return new ReturnT<UserInfo>(mockUser);
-            }
-        }
-
-        return new ReturnT<UserInfo>(ReturnT.FAIL_CODE, "username or password is invalid.");
+        // 校验
+        User user = userDao.getUserByUserName(username);
+        if (user == null) return new ReturnT<User>(ReturnT.FAIL_CODE, "username or password is invalid.");
+        if (Md5Utils.valiPassword(password,user.getUserPsw(),user.getSalt())) return new ReturnT<User>(user);
+        return new ReturnT<User>(ReturnT.FAIL_CODE, "username or password is invalid.");
     }
 
 

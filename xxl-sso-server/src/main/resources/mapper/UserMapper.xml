@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xxl.sso.server.dao.UserDao">
+
+    <resultMap id="BaseResultMap" type="User">
+        <result column="id" property="id"/>
+        <result column="user_name" property="userName"/>
+        <result column="user_psw" property="userPsw"/>
+        <result column="salt" property="salt"/>
+        <result column="password_decode" property="passwordDecode"/>
+    </resultMap>
+
+    <select id="getUserById" resultMap="BaseResultMap">
+        select * from t_cas where id=#{id}
+    </select>
+
+    <select id="getUserByUserName" resultMap="BaseResultMap">
+        select * from t_cas where user_name=#{userName}
+    </select>
+
+</mapper>
