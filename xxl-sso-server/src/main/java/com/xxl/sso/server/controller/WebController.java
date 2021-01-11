@@ -53,6 +53,7 @@ public class WebController {
      */
     @RequestMapping(Conf.SSO_LOGIN)
     public String login(Model model, HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(System.currentTimeMillis());
 
         // login check
         XxlSsoUser xxlUser = SsoWebLoginHelper.loginCheck(request, response);
