@@ -1,3 +1,14 @@
+github地址：https://github.com/xuxueli/xxl-sso
+
+sso-server域名：xxlssoserver.com
+sso-server地址：http://127.0.0.1:8080/xxl-sso-server
+sso-test-client：
+http://app1.cas.com:8081/xxl-sso-web-sample-springboot
+http://app1.cas.com:8081/xxl-sso-web-sample-springboot/json
+http://app1.cas.com:8081/xxl-sso-web-sample-springboot/white/1
+
+==========================================================================================
+
 集成客户端,共4步
     (参考 xxl-sso-web-sample-springboot)
 一、maven依赖
